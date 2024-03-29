@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .auth-btn {
+        width: 100%;
+        background-color: #2252e2;
+        color: white;
+        padding: 14px 20px;
+        margin: 45px 157px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .auth-btn:hover {
+        background-color: #2252e2;
+    }
+
+    .login-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 400px;
+        max-width: 90%;
+        text-align: center;
+    }
+    .login-container h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .login-container input[type="submit"] {
+        width: 100%;
+        background-color: #2252e2;
+        color: white;
+        padding: 12px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+    .login-container input[type="submit"]:hover {
+        background-color: #2252e2;
+    }
+    .login-container .social-icons {
+        margin-top: 20px;
+    }
+    .login-container .social-icons a {
+        color: #2252e2;
+        margin: 0 10px;
+        font-size: 24px;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .login-container .social-icons a:hover {
+        color: #2252e2;
+    }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <form action="#" method="post">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="submit" value="Login"><br>
+       <br> <a href="{% url 'signup' %}" class="auth-btn">Signup</a> 
+
+    </form>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+{% if messages %}
+    <script>
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                Swal.fire(
+                    'Success!',
+                    '{{ message }}',
+                    'success'
+                );
+            {% elif message.tags == 'error' %}
+                Swal.fire(
+                    'Error!',
+                    '{{ message }}',
+                    'error'
+                );
+            {% endif %}
+        {% endfor %}
+    </script>
+{% endif %}
+
+</body>
+</html>

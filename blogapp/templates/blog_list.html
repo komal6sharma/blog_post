@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #4c4caf;
+            margin-bottom: 20px;
+        }
+        .blog-post {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .blog-post h2 {
+            margin-top: 0;
+            color: #2252e2;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .blog-post p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .pagination {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .pagination a {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #2252e2;
+            border: 1px solid #2252e2;
+            border-radius: 4px;
+            margin: 0 4px;
+            transition: background-color 0.3s;
+        }
+        .pagination a:hover {
+            background-color: #2252e2;
+            color: #fff;
+        }
+        .pagination .active {
+            background-color: #2252e2;
+            color: #fff;
+        }
+        /* Style for the logout and create blog buttons */
+        .logout-btn,
+        .create-blog-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #2252e2;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        .logout-btn:hover,
+        .create-blog-btn:hover {
+            background-color: #2252e2;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    
+    <div class="container">
+        <a href="{% url 'create-blog' %}" class="create-blog-btn">Create Blog</a>
+
+        <h1>Blog List</h1>
+        {% for post in page %}
+            <div class="blog-post">
+                <h2><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h2>
+                <p>{{ post.content }}</p>
+            </div>
+        {% empty %}
+            <p>No blog posts found.</p>
+        {% endfor %}
+
+        {% if page.has_other_pages %}
+            <div class="pagination">
+                {% if page.has_previous %}
+                    <a href="?page=1">&laquo; First</a>
+                    <a href="?page={{ page.previous_page_number }}">Previous</a>
+                {% endif %}
+                {% for num in page.paginator.page_range %}
+                    {% if page.number == num %}
+                        <span class="active">{{ num }}</span>
+                    {% else %}
+                        <a href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page.has_next %}
+                    <a href="?page={{ page.next_page_number }}">Next</a>
+                    <a href="?page={{ page.paginator.num_pages }}">Last &raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

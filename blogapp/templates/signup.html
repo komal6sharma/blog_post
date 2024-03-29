@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .auth-btn {
+        width: 100%;
+        background-color: #2252e2;
+        color: white;
+        padding: 14px 20px;
+        margin: 45px 157px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .auth-btn:hover {
+        background-color: #2252e2;
+    }
+    
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+        background-color: #2252e2;
+        color: white;
+        padding: 14px 20px; 
+        margin: 8px 0;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+        background-color: #2252e2;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Sign Up</h2>
+    <form action="#" method="post">
+        {% csrf_token %}
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="Sign Up" class="auth-btn"><br>
+       <br> <a href="{% url 'login' %}" class="auth-btn">Login</a> 
+    </form>
+</div>
+
+<!-- Include SweetAlert library from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+{% if messages %}
+    <script>
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                Swal.fire(
+                    'Success!',
+                    '{{ message }}',
+                    'success'
+                );
+            {% elif message.tags == 'error' %}
+                Swal.fire(
+                    'Error!',
+                    '{{ message }}',
+                    'error'
+                );
+            {% endif %}
+        {% endfor %}
+    </script>
+{% endif %}
+
+</body>
+</html>
